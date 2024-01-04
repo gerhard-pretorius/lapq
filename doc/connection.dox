@@ -1,0 +1,12 @@
+/**
+
+@page connection Connection
+
+
+Connection
+    - Synchronous - Requires a blocking socket - use a member varible io_service
+    - Async - Requires io_service passed in constructor
+
+
+
+*/

@@ -1,0 +1,17 @@
+/**
+@mainpage Documentation
+
+
+@section Introduction
+
+The @b lapq library provides a C++ application programmer's interface to PostgreSQL. The library is
+a collection of classes that allow a client program to connect to the PostgreSQL backend server,
+execute queries and obtain the results.
+
+@ref connection "Connection"
+
+@ref result "Result"
+
+@ref protocol "Protocol implementation"
+
+*/
