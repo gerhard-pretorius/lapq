@@ -1,12 +1,6 @@
 
 /// @file dbquery.cpp
 
-// C and Unix
-
-// C++ and STL
-
-
-// Local
 #include "dbquery.h"
 
 

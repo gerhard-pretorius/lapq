@@ -4,23 +4,16 @@
 #ifndef LAPQ_UTIL_H
 #define LAPQ_UTIL_H
 
-// C and Unix
-
-// C++
 #include <system_error>
 #include <iostream>
 #include <string>
 #include <map>
 #include <functional>
 
-// Other
 #include "asio.hpp"
 #include "asio/ssl.hpp"
 
-
-// Local
 #include "error.h"
-
 
 
 namespace lapq {
