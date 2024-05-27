@@ -1,5 +1,7 @@
 
 #-----------------------------------------------------------------------------
+cmake_minimum_required (VERSION 3.20)
+
 project(lapq)
 
 set(LIB lapq)
@@ -12,7 +14,7 @@ set(LIB_VERSION ${LIB_MAJOR}.${LIB_MINOR}.${LIB_PATCH})
 
 #-----------------------------------------------------------------------------
 # CMake requirements
-cmake_minimum_required (VERSION 3.20)
+
 
 enable_testing()
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
@@ -22,7 +24,6 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 # Compiler flags
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -std=c++20")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
-add_definitions(-DASIO_STANDALONE -DASIO_HAS_STD_CHRONO)
 
 
 #-----------------------------------------------------------------------------
