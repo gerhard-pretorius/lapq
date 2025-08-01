@@ -8,7 +8,6 @@
 #include <map>
 
 #include "util.h"
-#include "misc.h"
 #include "protocol.h"
 #include "connection.h"
 #include "dbquery.h"

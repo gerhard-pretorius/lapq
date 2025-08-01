@@ -5,6 +5,7 @@
 
 #include "fsm.h"
 
+#define PRETTY (std::cout << __PRETTY_FUNCTION__ << std::endl)
 
 namespace lapq {
 namespace pv3 {
@@ -462,7 +463,7 @@ void FSM::noticeResponse(const Header &head, const Buffer &body)
       m_result->add_result(msg.sql_error());
   }
   */
-  DBG(msg.notice());
+  //DBG(msg.notice());
 
   receive();
 }
@@ -480,7 +481,7 @@ void FSM::query_error(const Header &head, const Buffer &body)
   if (m_result) {
       m_result->add_result(msg.sql_error());
   }
-  DBG(msg.sql_error());
+  //DBG(msg.sql_error());
 
   receive();
 }

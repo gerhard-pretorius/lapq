@@ -11,7 +11,6 @@
 #include "asio/ssl.hpp"
 
 #include "util.h"
-#include "misc.h"
 #include "protocol.h"
 #include "dbresult.h"
 

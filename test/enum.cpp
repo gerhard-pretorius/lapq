@@ -12,6 +12,7 @@
 using namespace std;
 using namespace lapq;
 
+#define DBG(s) do { std::cout << s << std::endl; } while (false)
 
 enum Color { RED, BLACK };
 
@@ -22,11 +23,11 @@ public:
     EnumFormat()
     {
         m_pg_decoder.emplace(16404,
-            [this](const Buffer::value_type *buf, int sz) { return decodeColor(buf, sz);});
+            [this](const char *buf, int sz) { return decodeColor(buf, sz);});
     }
 
 private:
-    value_type decodeColor(const Buffer::value_type *buf, int sz)
+    value_type decodeColor(const char *buf, int sz)
     {
         auto s = lapq::pg::decodeText(buf, sz);
         return s;

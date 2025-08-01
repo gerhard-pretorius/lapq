@@ -4,12 +4,13 @@
 #include <string>
 
 #include "lapq.h"
-#include "misc.h"
 #include "connection.h"
 #include "error.h"
 
 using namespace std;
 using namespace lapq;
+
+#define DBG(s) do { std::cout << s << std::endl; } while (false)
 
 void showRecord(const ResultSet &rset)
 {

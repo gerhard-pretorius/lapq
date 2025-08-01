@@ -30,7 +30,7 @@ std::ostream &operator<<(std::ostream &os, const std::vector<FieldSpec> &obj)
 
 
 //////////////////////////////////////////////////////////////////////////////
-bool decodeBool(const Buffer::value_type *buf, int sz)
+bool decodeBool(const char *buf, int sz)
 {
   auto tmp = reinterpret_cast<const char *>(buf);
   if ( (*tmp == 't') || (*tmp == 'T') ) {
@@ -41,7 +41,7 @@ bool decodeBool(const Buffer::value_type *buf, int sz)
 
 
 //----------------------------------------------------------------------------
-int decodeInt4(const Buffer::value_type *buf, int sz)
+int decodeInt4(const char *buf, int sz)
 {
   auto tmp = reinterpret_cast<const char *>(buf);
   return std::stoi({tmp, static_cast<std::string::size_type>(sz)});
@@ -49,7 +49,7 @@ int decodeInt4(const Buffer::value_type *buf, int sz)
 
 
 //----------------------------------------------------------------------------
-std::string decodeText(const Buffer::value_type *buf, int sz)
+std::string decodeText(const char *buf, int sz)
 {
   auto tmp = reinterpret_cast<const char *>(buf);
   return std::string{tmp, static_cast<std::string::size_type>(sz)};

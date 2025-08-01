@@ -19,11 +19,11 @@
 namespace lapq {
 //////////////////////////////////////////////////////////////////////////////
 
-
-
 using Option = std::map<std::string, std::string>;
 
 enum class SSLMode { require = 0, verify_ca, verify_full };
+
+
 
 namespace opt {
 //////////////////////////////////////////////////////////////////////////////
@@ -63,6 +63,8 @@ Option getEnv();
 Error setContext(const Option &option, asio::ssl::context &context);
 SSLMode getSSLMode(const Option &option);
 
+bool verifyCertificate(SSLMode sslmode, bool preverified,
+    asio::ssl::verify_context& context);
 
 
 //////////////////////////////////////////////////////////////////////////////

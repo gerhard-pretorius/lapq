@@ -13,7 +13,6 @@
 #include <functional>
 
 #include "util.h"
-#include "misc.h"
 #include "pgformat.h"
 
 namespace lapq {
@@ -138,7 +137,7 @@ public:
   virtual void add_result(const SQLError &e) = 0;
 
   virtual void add_row() = 0;
-  virtual void add_column(int i, const Buffer::value_type *buf, Buffer::size_type sz) = 0;
+  virtual void add_column(int i, const char *buf, int sz) = 0;
 
   
 }; // ResultBase
@@ -175,7 +174,7 @@ public:
 
   void add_row() { m_rset.back().emplace_back(); }
 
-  void add_column(int i, const Buffer::value_type *buf, Buffer::size_type sz)
+  void add_column(int i, const char *buf, int sz)
   {
     auto &fs = m_rset.back().field_spec();
     m_rset.back().back().push_back(m_pgformat.decode(fs[i], buf, sz));

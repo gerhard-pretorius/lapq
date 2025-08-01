@@ -10,7 +10,7 @@
 #include <map>
 #include <array>
 
-#include "misc.h"
+#include "types.h"
 #include "util.h"
 #include "dbresult.h"
 #include "pgformat.h"
@@ -22,7 +22,7 @@ namespace pv3 {
 ///////////////////////////////////////////////////////////////////////////////
 
 using MessageType = char;
-using Byte4 = std::array<unsigned char, 4>;
+
 
 ///////////////////////////////////////////////////////////////////////////////
 class Header {

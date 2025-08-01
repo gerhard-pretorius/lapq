@@ -9,6 +9,9 @@
 using namespace std;
 using namespace lapq;
 
+
+#define DBG(s) do { std::cout << s << std::endl; } while (false)
+
 int main()
 {
   asio::io_service mios;

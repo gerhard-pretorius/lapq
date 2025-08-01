@@ -11,7 +11,7 @@
 #include <sstream>
 #include <any>
 
-#include "misc.h"
+#include "types.h"
 #include "pgtype.h"
 
 
@@ -36,9 +36,9 @@ std::ostream &operator<<(std::ostream &os, const std::vector<FieldSpec> &obj);
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Decode the buffer and return the C++ value.
-bool decodeBool(const Buffer::value_type *buf, int sz);
-int decodeInt4(const Buffer::value_type *buf, int sz);
-std::string decodeText(const Buffer::value_type *buf, int sz);
+bool decodeBool(const char *buf, int sz);
+int decodeInt4(const char *buf, int sz);
+std::string decodeText(const char *buf, int sz);
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -48,7 +48,7 @@ public:
   using value_type = T;
 
   using decode_function =
-    std::function<value_type(const Buffer::value_type *buf, int sz)>;
+    std::function<value_type(const char *buf, int sz)>;
 
   using map_type = std::map<decltype(FieldSpec::type_oid), decode_function>;
   using iterator = typename map_type::iterator;
@@ -67,7 +67,7 @@ public:
 
   //------------------------------------------------------------------------
   virtual value_type decode(const FieldSpec &fs,
-                            const Buffer::value_type *buf,
+                            const char *buf,
                             int sz) const
   {
     if (fs.type_format == 1) {      // binary format not supported

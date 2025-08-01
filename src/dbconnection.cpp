@@ -10,7 +10,6 @@
 
 #include "dbconnection.h"
 #include "dbresult.h"
-#include "misc.h"
 
 
 namespace lapq {

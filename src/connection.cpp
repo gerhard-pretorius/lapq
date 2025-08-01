@@ -1,19 +1,12 @@
 
 /// @file connection.cpp
 
-#include <iomanip>
-#include <vector>
-
 #include "connection.h"
-#include "misc.h"
 #include "util.h"
 
 
 namespace lapq {
 //////////////////////////////////////////////////////////////////////////////
-
-bool verifyCertificate(SSLMode sslmode, bool preverified, asio::ssl::verify_context& context);
-
 
 namespace pv3 {
 //============================================================================
@@ -84,7 +77,7 @@ SSLConnection::SSLConnection(asio::io_service &ios,
   m_socket.set_verify_callback([sslmode](bool preverified,
                                asio::ssl::verify_context& ctx)->bool
   {
-    return verifyCertificate(sslmode, preverified, ctx);
+    return util::verifyCertificate(sslmode, preverified, ctx);
   });
 }
 
@@ -212,7 +205,7 @@ SSLAsyncConnection::SSLAsyncConnection(asio::io_service &ios,
   m_socket.set_verify_callback([sslmode](bool preverified,
                                asio::ssl::verify_context& ctx)->bool
   {
-    return verifyCertificate(sslmode, preverified, ctx);
+    return util::verifyCertificate(sslmode, preverified, ctx);
   });
 }
 

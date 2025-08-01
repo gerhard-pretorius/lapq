@@ -62,7 +62,7 @@ private:
 
 using Numeric = ttmath::Big<1,2>;
 
-lapq::pg::PGFormat::value_type decodeMoneyNumeric(const Buffer::value_type *buf, int sz)
+lapq::pg::PGFormat::value_type decodeMoneyNumeric(const char *buf, int sz)
 {
     PointerStreamBuf<> sbuf(buf,0, sz);
     std::istream is(&sbuf);
@@ -75,7 +75,7 @@ lapq::pg::PGFormat::value_type decodeMoneyNumeric(const Buffer::value_type *buf,
     return n;
 }
 
-lapq::pg::PGFormat::value_type decodeMoneyDouble(const Buffer::value_type *buf, int sz)
+lapq::pg::PGFormat::value_type decodeMoneyDouble(const char *buf, int sz)
 {
     PointerStreamBuf<> sbuf(buf,0, sz);
     std::istream is(&sbuf);
@@ -97,7 +97,7 @@ int main()
     util::getEnv(option);
 
     auto ec = c.connect(option);
-    if (ec) { DBG(ec.message()); return 1;}
+    if (ec) { cout << ec.message() << endl; return 1;}
 
     lapq::pg::PGFormat pgf;
 //  pgf.emplace(lapq::pg::PG_CASHOID, decodeMoneyNumeric);
@@ -118,7 +118,7 @@ int main()
     cout << std::showbase << put_money(n) << endl;
 
     ec = c.close();
-    if (ec) { DBG(ec.message()); }
+    if (ec) { cout << ec.message() << endl; }
 
     return 0;
 }

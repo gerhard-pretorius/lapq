@@ -18,7 +18,7 @@ using namespace lapq;
 
 using Numeric = ttmath::Big<1,2>;
 
-lapq::pg::PGFormat::value_type decodeNumeric(const Buffer::value_type *buf, int sz)
+lapq::pg::PGFormat::value_type decodeNumeric(const char *buf, int sz)
 {
     Numeric n;
     n.FromString(lapq::pg::decodeText(buf, sz));
@@ -34,7 +34,7 @@ int main()
     util::getEnv(option);
 
     auto ec = c.connect(option);
-    if (ec) { DBG(ec.message()); return 1;}
+    if (ec) { cout << ec.message() << endl; return 1;}
 
     lapq::pg::PGFormat pgf;
     pgf.emplace(lapq::pg::PG_NUMERICOID, decodeNumeric);
@@ -43,12 +43,12 @@ int main()
     ec = c.exec("select (-12.5678)::numeric(9,5);", rset);
 
     auto n = rset[0].get<Numeric>(0,0);
-    DBG(n);
+    cout << n << endl;
     n += 10.56;
-    DBG(n);
+    cout << n << endl;
 
     ec = c.close();
-    if (ec) { DBG(ec.message()); }
+    if (ec) { cout << ec.message() << endl; }
 
     return 0;
 }

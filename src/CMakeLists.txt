@@ -3,6 +3,7 @@
 #file(GLOB SRC_FILES *.cpp *.h)
 
 set(SRC_FILES
+  types.cpp
   misc.cpp
   error.cpp
   util.cpp
@@ -16,6 +17,7 @@ set(SRC_FILES
 )
 
 set(HDR_FILES
+  types.h
   misc.h
   error.h
   util.h
