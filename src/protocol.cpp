@@ -42,13 +42,13 @@ void serialize(const T &val, Buffer &buf)
 
 void serializeInt16(std::int16_t val, Buffer &buf)
 {
-  auto tmp = ::htons(reinterpret_cast<std::uint16_t &>(val));
+  auto tmp = htons(reinterpret_cast<std::uint16_t &>(val));
   pv3::serialize(tmp, buf);
 }
 
 void serializeInt32(std::int32_t val, Buffer &buf)
 {
-  auto tmp = ::htonl(reinterpret_cast<std::uint32_t &>(val));
+  auto tmp = htonl(reinterpret_cast<std::uint32_t &>(val));
   pv3::serialize(tmp, buf);
 }
 
@@ -127,7 +127,7 @@ Buffer::size_type deserializeInt16(int &t,
                                    const Buffer::size_type pos = 0)
 {
   auto tmp = reinterpret_cast<const std::uint16_t *>(b.data() + pos);
-  t = ::ntohs(*tmp);
+  t = ntohs(*tmp);
   return sizeof(std::uint16_t);
 }
 
@@ -138,7 +138,7 @@ Buffer::size_type deserializeInt32(int &t,
                                    const Buffer::size_type pos = 0)
 {
   auto tmp = reinterpret_cast<const std::uint32_t *>(b.data() + pos);
-  t = ::ntohl(*tmp);
+  t = ntohl(*tmp);
   return sizeof(std::uint32_t);
 }
 

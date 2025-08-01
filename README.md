@@ -50,3 +50,76 @@ looking like this:
 
 ```
 
+
+```
+# sudo apt-get install libssl-dev
+
+CC=clang CXX=clang++ \
+CXXFLAGS="-std=c++20" \
+~/opt/cmake/bin/cmake -G "Unix Makefiles" \
+-DCMAKE_PREFIX_PATH=$HOME/opt \
+-DCMAKE_BUILD_TYPE=Release \
+-DCMAKE_INSTALL_PREFIX=$HOME/install \
+-DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+-DASIO_PREFIX=$HOME/opt \
+-DTTMATH_PREFIX=$HOME/opt \
+~/github/lapq
+```
+
+
+Run Postgres in a container and share the Unix domain socket
+used to connect. This allows running the test programs on the host
+and connect to the container. Note postgres is NOT running on the host.
+The Postgres Dockerfile uses group/user postgres 70
+
+/var/run -> /run
+/var/run/postgresql/ -> /run/postgresql
+
+This requires a matching user/group on the host
+
+```
+sudo addgroup --gid 70 --system postgres
+
+sudo adduser --system --uid 70 --ingroup postgres \
+--no-create-home --disabled-password --disabled-login \
+postgres
+
+sudo mkdir /run/postgresql
+sudo chown postgres:postgres /run/postgresql
+sudo chmod g+w,o-w /run/postgresql
+```
+
+```
+docker pull alpine:3.19
+docker pull postgres:16.3-alpine3.19
+
+docker run --rm --name pgres --hostname pgres \
+-e POSTGRES_PASSWORD=mysecret -d \
+-v/run/postgresql:/run/postgresql \
+postgres:16.3-alpine3.19
+
+docker exec -ti -u root pgres bash
+
+apk update
+apk add openssl
+exit
+
+dk network inspect bridge --format 'table {{.Containers}}'
+
+"IPv4Address": "172.17.0.2
+
+
+docker exec -ti -u postgres pgres psql -h pgres
+
+create role gerhard with login;
+alter user gerhard with encrypted password 'mysecret';
+
+
+docker exec -ti -u postgres pgres psql -h pgres -U gerhard -d template1
+
+docker exec -ti -u postgres pgres bash
+
+LD_LIBRARY_PATH+=:/mnt/src PGUSER=gerhard PGDATABASE=template1 ./t1
+
+```
+
