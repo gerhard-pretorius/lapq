@@ -8,22 +8,19 @@
 using namespace std;
 using namespace lapq;
 
-#define DBG(s) do { std::cout << s << std::endl; } while (false)
-
 int main()
 {
   asio::io_service mios;
   Connection c(mios);
 
-  //Option option { {{"user"}, {"gptest"}}};
   Option option;
   util::getEnv(option);
-  cout << option << endl;
+  // cout << option << endl;
 
   //asio::ssl::context context(asio::ssl::context::sslv23);
   //auto ec = c.connect(option, SSLOption::require, context);
   auto ec = c.connect(option);
-  if (ec) { DBG(ec.message()); return 1;}
+  if (ec) { cout << "Error: " << ec.message() << endl; return 1;}
 
   ResultSet rset;
   ec = c.exec("select 'hello'::text as abc, 2::int as one, true::boolean as xx;\
@@ -33,26 +30,26 @@ int main()
 
       if (rset)
       {
-        DBG(rset[0].get<std::string>(0,0));
-        DBG(rset[0].get<int>(0,1));
-        DBG(rset[0].get<bool>(0,2));
+        cout << rset[0].get<std::string>(0,0) << endl;
+        cout << rset[0].get<int>(0,1) << endl;
+        cout << rset[0].get<bool>(0,2) << endl;
 
-        DBG(std::any_cast<string>(rset[0].front().front()));
-        DBG(rset[0].front().get<std::string>(0));
+        cout << std::any_cast<string>(rset[0].front().front()) << endl;
+        cout << rset[0].front().get<std::string>(0) << endl;
 
-        DBG(std::any_cast<bool>(rset[0].back().back()));
-        DBG(rset[0].back().get<bool>(2));
+        cout << std::any_cast<bool>(rset[0].back().back()) << endl;
+        cout << rset[0].back().get<bool>(2) << endl;
       }
       else {
-        DBG(rset[0].error());
+        cout << rset[0].error() << endl;
       }
   }
   else {
-    DBG(ec.message());
+    cout << "Error: " << ec.message() << endl;
   }
 
   ec = c.close();
-  if (ec) { DBG(ec.message()); }
+  if (ec) { cout << "Error: " << ec.message() << endl; }
 
   return 0;
 }

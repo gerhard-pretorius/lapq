@@ -123,3 +123,19 @@ LD_LIBRARY_PATH+=:/mnt/src PGUSER=gerhard PGDATABASE=template1 ./t1
 
 ```
 
+
+
+
+Todo
+----
+
+1. Automate tests using cmake.
+2. Add 'make install' to .local.
+3. Instructions for running db using Docker.
+4. Use variant instead of any as a default for Record. And don't inherit from
+   any.
+5. Remove debug statements.
+6. Use modules.
+7. Use concepts.
+8. Upgrade Asio.
+9. Copy construct the formatter in DBResultSetType constructor.

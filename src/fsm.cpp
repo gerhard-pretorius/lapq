@@ -5,8 +5,6 @@
 
 #include "fsm.h"
 
-#define PRETTY (std::cout << __PRETTY_FUNCTION__ << std::endl)
-
 namespace lapq {
 namespace pv3 {
 ///////////////////////////////////////////////////////////////////////////////
@@ -57,8 +55,6 @@ FSM::FSM(asio::io_service &ios,
 //----------------------------------------------------------------------------
 void FSM::connect(const Option &option, EHandler &&eh)
 {
-  PRETTY;
-
   m_ehandler = std::move(eh);
   m_con.connect([this, msg = pv3::StartUp(option)]
   (const std::error_code &ec)
@@ -104,8 +100,6 @@ void FSM::connectSSL(const Option &option, EHandler &&eh)
 //----------------------------------------------------------------------------
 void FSM::exec(const std::string &q, ResultBase *res, EHandler &&eh)
 {
-  PRETTY;
-
   if (state() != State::IDLE) {
     auto ec = make_error_code(lapq::errc::busy);
     eh(ec);
@@ -130,8 +124,6 @@ void FSM::exec(const std::string &q, ResultBase *res, EHandler &&eh)
 //----------------------------------------------------------------------------
 void FSM::exec(DBQuery *q, ResultBase *res, EHandler &&eh)
 {
-  PRETTY;
-
   if (state() != State::IDLE) {
     auto ec = make_error_code(lapq::errc::busy);
     eh(ec);
@@ -178,8 +170,6 @@ void FSM::exec(DBQuery *q, ResultBase *res, EHandler &&eh)
 //----------------------------------------------------------------------------
 void FSM::parse(DBQuery *q, EHandler &&eh)
 {
-  PRETTY;
-
   if (state() != State::IDLE) {
     auto ec = make_error_code(lapq::errc::busy);
     eh(ec);
@@ -212,7 +202,6 @@ void FSM::parse(DBQuery *q, EHandler &&eh)
 //----------------------------------------------------------------------------
 void FSM::close(EHandler &&eh)
 {
-  PRETTY;
 /*
   fixme
   if (state() != State::IDLE) {
@@ -254,7 +243,6 @@ void FSM::next(Event event, const Header &head, const Buffer &body)
 //----------------------------------------------------------------------------
 void FSM::receive()
 {
-  PRETTY;
   m_con.read(Header::size(),
   [this](const std::error_code &ec, std::size_t bytes, const Buffer &buf)
   {
@@ -312,7 +300,6 @@ void FSM::authenticate(const Header &head, const Buffer &body)
 //----------------------------------------------------------------------------
 void FSM::closeComplete(const Header &head, const Buffer &body)
 {
-  PRETTY;
   pv3::CloseComplete msg;
 
   auto ec = msg.deserialize(head, body);
@@ -334,8 +321,6 @@ void FSM::authError(const Header &head, const Buffer &body)
 //----------------------------------------------------------------------------
 void FSM::rowDescription(const Header &head, const Buffer &body)
 {
-  PRETTY;
-
   std::vector<pg::FieldSpec> fs;
   pv3::RowDescription msg;
   auto ec = msg.deserialize(head, body, fs);
@@ -377,7 +362,6 @@ void FSM::backendKeyData(const Header &head, const Buffer &body)
 //----------------------------------------------------------------------------
 void FSM::readyForQuery(const Header &head, const Buffer &body)
 {
-  PRETTY;
   pv3::ReadyForQuery msg;
   auto ec = msg.deserialize(head, body);
 
@@ -389,7 +373,7 @@ void FSM::readyForQuery(const Header &head, const Buffer &body)
 //----------------------------------------------------------------------------
 void FSM::dataRow(const Header &head, const Buffer &body)
 {
-  PRETTY;
+  
   pv3::DataRow msg;
 
   //auto ec = msg.deserialize(head, body, *rep.result);
@@ -403,7 +387,6 @@ void FSM::dataRow(const Header &head, const Buffer &body)
 //----------------------------------------------------------------------------
 void FSM::commandComplete(const Header &head, const Buffer &body)
 {
-  PRETTY;
   pv3::CommandComplete msg;
 
   auto ec = msg.deserialize(head, body);
@@ -416,7 +399,6 @@ void FSM::commandComplete(const Header &head, const Buffer &body)
 //----------------------------------------------------------------------------
 void FSM::parseComplete(const Header &head, const Buffer &body)
 {
-  PRETTY;
   pv3::ParseComplete msg;
   auto ec = msg.deserialize(head, body);
   receive();
@@ -426,7 +408,6 @@ void FSM::parseComplete(const Header &head, const Buffer &body)
 //----------------------------------------------------------------------------
 void FSM::bindComplete(const Header &head, const Buffer &body)
 {
-  PRETTY;
   pv3::BindComplete msg;
   auto ec = msg.deserialize(head, body);
   receive();
@@ -436,8 +417,6 @@ void FSM::bindComplete(const Header &head, const Buffer &body)
 //----------------------------------------------------------------------------
 void FSM::parameterDescription(const Header &head, const Buffer &body)
 {
-  PRETTY;
-
   std::vector<decltype(pg::FieldSpec::type_oid)> oid;
   pv3::ParameterDescription msg;
   auto ec = msg.deserialize(head, body, oid);
@@ -452,7 +431,6 @@ void FSM::parameterDescription(const Header &head, const Buffer &body)
 //----------------------------------------------------------------------------
 void FSM::noticeResponse(const Header &head, const Buffer &body)
 {
-  PRETTY;
   pv3::NoticeResponse msg;
 
   auto ec = msg.deserialize(head, body);
@@ -472,7 +450,6 @@ void FSM::noticeResponse(const Header &head, const Buffer &body)
 //----------------------------------------------------------------------------
 void FSM::query_error(const Header &head, const Buffer &body)
 {
-  PRETTY;
   pv3::ErrorResponse msg;
 
   auto ec = msg.deserialize(head, body);

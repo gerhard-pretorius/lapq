@@ -12,8 +12,6 @@
 using namespace std;
 using namespace lapq;
 
-#define DBG(s) do { std::cout << s << std::endl; } while (false)
-
 enum Color { RED, BLACK };
 
 class EnumFormat : public lapq::pg::PGFormat
@@ -46,17 +44,17 @@ int main()
     util::getEnv(option);
 
     auto ec = c.connect(option);
-    if (ec) { DBG(ec.message()); return 1;}
+    if (ec) { cout << "Error: " << ec.message() << endl; return 1;}
 
     EnumFormat pgf;
     ResultSet rset(pgf);
     ec = c.exec("select 'red'::color; select (1, 'one')::mytype as m;", rset);
 
-    DBG(rset[0].get<std::string>(0,0));
-    DBG(rset[1].get<std::string>(0,0));
+    cout << rset[0].get<std::string>(0,0) << endl;
+    cout << rset[1].get<std::string>(0,0) << endl;
 
     ec = c.close();
-    if (ec) { DBG(ec.message()); }
+    if (ec) { cout << "Error: " << ec.message() << endl; }
 
     return 0;
 }

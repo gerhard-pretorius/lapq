@@ -10,28 +10,26 @@
 using namespace std;
 using namespace lapq;
 
-#define DBG(s) do { std::cout << s << std::endl; } while (false)
-
 void showRecord(const ResultSet &rset)
 {
   if (!rset) {
-    if (rset.size() < 1) { DBG("size=" << rset.size()); return; }
-    if (!rset[0]) { DBG(rset[0].error()); return; }
+    if (rset.size() < 1) { cout << "size=" << rset.size() << endl; return; }
+    if (!rset[0]) { cout << rset[0].error() << endl; return; }
   }
 
   auto &recset = rset[0];
 
   auto sz = recset.field_spec().size();
-  DBG("specsize=" << sz);
+  cout << "specsize=" << sz << endl;
 
   if (sz == 3) { 
-    DBG(recset.get<std::string>(0,0));
-    DBG(recset.get<int>(0,1));
-    DBG(recset.get<bool>(0,2));
+    cout << recset.get<std::string>(0,0) << endl;
+    cout << recset.get<int>(0,1) << endl;
+    cout << recset.get<bool>(0,2) << endl;
   }
 
   if (sz == 1) {
-    DBG(recset.get<std::string>(0,0));
+    cout << recset.get<std::string>(0,0) << endl;
   }
 }
 
@@ -48,7 +46,7 @@ int main()
 
     c->connect(option, [&](const std::error_code &ec)
     {
-      if (ec) { DBG(ec.message()); return; }
+      if (ec) { cout << "Error: " << ec.message() << endl; return; }
 
       auto rs1 = std::make_shared<ResultSet>();
       c->exec(
@@ -63,7 +61,7 @@ int main()
       c->exec("select 'goodbye'::text as abc;", *rs2,
         [rs2](const std::error_code &ec)
         {
-          if (ec) { DBG("ec=" << ec.message()); return; }
+          if (ec) { cout << "Error: ec=" << ec.message() << endl; return; }
           auto &res = *rs2;
           showRecord(res);
         });
@@ -71,7 +69,7 @@ int main()
 
     mios.run();
   }
-  catch(const std::system_error &e) { DBG(e.what()); throw e; }
+  catch(const std::system_error &e) { cout << e.what() << endl; throw e; }
 
   return 0;
 }

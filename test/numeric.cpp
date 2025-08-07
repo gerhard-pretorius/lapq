@@ -34,7 +34,7 @@ int main()
     util::getEnv(option);
 
     auto ec = c.connect(option);
-    if (ec) { cout << ec.message() << endl; return 1;}
+    if (ec) { cout << "Error: " << ec.message() << endl; return 1;}
 
     lapq::pg::PGFormat pgf;
     pgf.emplace(lapq::pg::PG_NUMERICOID, decodeNumeric);
@@ -48,7 +48,7 @@ int main()
     cout << n << endl;
 
     ec = c.close();
-    if (ec) { cout << ec.message() << endl; }
+    if (ec) { cout << "Error: " << ec.message() << endl; }
 
     return 0;
 }
