@@ -1,0 +1,26 @@
+
+#-----------------------------------------------------------------------------
+# The tests are named "connect-$function_name".
+set(CMD connect)
+
+#-----------------------------------------------------------------------------
+# This function use env variables instead of commandline args
+# (other than the name of the test function). For this case we use the remaining
+# args as key=val pairs for the environemnt.
+# The name should match a function declared in the CMD.
+#
+function(etst name pass fail)
+  set(tname "${CMD}-${name}")
+  add_test(NAME "${tname}" COMMAND "${CMD}" "${name}" )
+  set_tests_properties(${tname} PROPERTIES PASS_REGULAR_EXPRESSION "${pass}")
+  set_tests_properties(${tname} PROPERTIES FAIL_REGULAR_EXPRESSION "${fail}")
+  set_tests_properties(${tname} PROPERTIES ENVIRONMENT "${ARGN}")
+endfunction()
+
+#-----------------------------------------------------------------------------
+# The default connection params
+set(defcon "PGUSER=gerhard" "PGDATABASE=template1")
+
+
+#-----------------------------------------------------------------------------
+etst(block_local1 "${ok}" "${err}" "${defcon}")

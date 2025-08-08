@@ -1,22 +1,33 @@
 
 #-----------------------------------------------------------------------------
+set(LIBS ${LIBLAPQ} utest ${REQ_LIBRARIES})
+
+#-----------------------------------------------------------------------------
+# Adds an executable with a name that matches the src filename without
+# the extension
+#
+function(AddExec fname)
+  set(name "")
+  get_filename_component(name "${fname}" NAME_WE)
+  add_executable(${name} ${fname})
+  target_link_libraries(${name} ${LIBS})
+endfunction()
+
+#-----------------------------------------------------------------------------
 file(GLOB SRC_FILES *.cpp)
 
-add_executable(t1 t1.cpp)
-add_executable(t2 t2.cpp)
-add_executable(t3 t3.cpp)
-add_executable(t4 t4.cpp)
-add_executable(t5 t5.cpp)
-add_executable(enum enum.cpp)
-add_executable(numeric numeric.cpp)
-add_executable(money money.cpp)
 
-target_link_libraries(t1 ${LIB} ${REQ_LIBRARIES})
-target_link_libraries(t2 ${LIB} ${REQ_LIBRARIES})
-target_link_libraries(t3 ${LIB} ${REQ_LIBRARIES})
-target_link_libraries(t4 ${LIB} ${REQ_LIBRARIES})
-target_link_libraries(t5 ${LIB} ${REQ_LIBRARIES})
-target_link_libraries(enum ${LIB} ${REQ_LIBRARIES})
-target_link_libraries(numeric ${LIB} ${REQ_LIBRARIES})
-target_link_libraries(money ${LIB} ${REQ_LIBRARIES})
+AddExec(connect.cpp)
+AddExec(t1.cpp)
+AddExec(t2.cpp)
+AddExec(t3.cpp)
+AddExec(t4.cpp)
+AddExec(t5.cpp)
+AddExec(enum.cpp)
+AddExec(numeric.cpp)
+AddExec(money.cpp)
 
+
+#-----------------------------------------------------------------------------
+# ctest tests
+add_subdirectory(cmake)

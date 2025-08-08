@@ -4,7 +4,7 @@ cmake_minimum_required (VERSION 3.20)
 
 project(lapq)
 
-set(LIB lapq)
+set(LIBLAPQ lapq)
 set(LIB_MAJOR 1)
 set(LIB_MINOR 0)
 set(LIB_PATCH 1)
@@ -14,7 +14,6 @@ set(LIB_VERSION ${LIB_MAJOR}.${LIB_MINOR}.${LIB_PATCH})
 
 #-----------------------------------------------------------------------------
 # CMake requirements
-
 
 enable_testing()
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
@@ -88,6 +87,7 @@ include_directories(SYSTEM /usr/include/postgresql)
 
 
 #-----------------------------------------------------------------------------
+add_subdirectory(lib/utest)
 add_subdirectory(src)
 add_subdirectory(test)
 
